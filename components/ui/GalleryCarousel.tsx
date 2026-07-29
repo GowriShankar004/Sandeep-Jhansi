@@ -12,6 +12,8 @@ type GalleryItem = {
 };
 
 const SETTLE_DEBOUNCE_MS = 120;
+const AUTOPLAY_INTERVAL_MS = 3000;
+const AUTOPLAY_RESUME_AFTER_MS = 4000;
 
 function GalleryCard({
   item,
@@ -23,27 +25,31 @@ function GalleryCard({
   priority?: boolean;
 }) {
   const inViewRef = useRef<HTMLDivElement | null>(null);
-  const isActive = useInView(inViewRef, { margin: "-35% 0px -35% 0px" });
+  const isActive = useInView(inViewRef, { margin: "0px -35% 0px -35%" });
 
   return (
-    <motion.div
+    <div
       ref={(el) => {
         inViewRef.current = el;
         cardRef(el);
       }}
-      animate={{ scale: isActive ? 1 : 0.85, opacity: isActive ? 1 : 0.45 }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="relative aspect-[3/4] w-56 shrink-0 snap-center overflow-hidden rounded-2xl border border-gold/20 bg-cream-dark shadow-lg sm:w-64"
+      className="relative aspect-[3/4] w-56 shrink-0 snap-center sm:w-64"
     >
-      {item.src ? (
-        <Image src={item.src} alt={item.alt} fill sizes="16rem" className="object-cover" priority={priority} />
-      ) : (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-gold/10 to-maroon/10 text-gold">
-          <Heart className="h-6 w-6" strokeWidth={1.5} />
-          <span className="font-body text-xs tracking-wide text-ink-muted">{item.alt}</span>
-        </div>
-      )}
-    </motion.div>
+      <motion.div
+        animate={{ scale: isActive ? 1.08 : 0.8, opacity: isActive ? 1 : 0.45 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute inset-0 overflow-hidden rounded-2xl border border-gold/20 bg-cream-dark shadow-lg"
+      >
+        {item.src ? (
+          <Image src={item.src} alt={item.alt} fill sizes="16rem" className="object-cover" priority={priority} />
+        ) : (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-gold/10 to-maroon/10 text-gold">
+            <Heart className="h-6 w-6" strokeWidth={1.5} />
+            <span className="font-body text-xs tracking-wide text-ink-muted">{item.alt}</span>
+          </div>
+        )}
+      </motion.div>
+    </div>
   );
 }
 
@@ -72,6 +78,32 @@ export function GalleryCarousel({ items }: { items: GalleryItem[] }) {
     container.scrollLeft = card.offsetLeft + card.offsetWidth / 2 - container.clientWidth / 2;
   };
 
+  const centerCardSmooth = (index: number) => {
+    const container = containerRef.current;
+    const card = cardRefs.current[index];
+    if (!container || !card) return;
+    const left = card.offsetLeft + card.offsetWidth / 2 - container.clientWidth / 2;
+    container.scrollTo({ left, behavior: "smooth" });
+  };
+
+  const findNearestIndex = () => {
+    const container = containerRef.current;
+    if (!container) return 0;
+    const center = container.scrollLeft + container.clientWidth / 2;
+    let nearest = 0;
+    let nearestDistance = Infinity;
+    cardRefs.current.forEach((card, i) => {
+      if (!card) return;
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - center);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearest = i;
+      }
+    });
+    return nearest;
+  };
+
   useEffect(() => {
     if (!canLoop || hasCentered.current) return;
     if (cardRefs.current[n]) {
@@ -88,18 +120,7 @@ export function GalleryCarousel({ items }: { items: GalleryItem[] }) {
     const handleScroll = () => {
       window.clearTimeout(settleTimerRef.current);
       settleTimerRef.current = window.setTimeout(() => {
-        const center = container.scrollLeft + container.clientWidth / 2;
-        let nearest = 0;
-        let nearestDistance = Infinity;
-        cardRefs.current.forEach((card, i) => {
-          if (!card) return;
-          const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-          const distance = Math.abs(cardCenter - center);
-          if (distance < nearestDistance) {
-            nearestDistance = distance;
-            nearest = i;
-          }
-        });
+        const nearest = findNearestIndex();
 
         if (nearest < n) {
           centerCard(nearest + n);
@@ -113,6 +134,36 @@ export function GalleryCarousel({ items }: { items: GalleryItem[] }) {
     return () => {
       container.removeEventListener("scroll", handleScroll);
       window.clearTimeout(settleTimerRef.current);
+    };
+  }, [canLoop, n]);
+
+  useEffect(() => {
+    if (!canLoop) return;
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+    const container = containerRef.current;
+    if (!container) return;
+
+    let pausedUntil = 0;
+    const pause = () => {
+      pausedUntil = Date.now() + AUTOPLAY_RESUME_AFTER_MS;
+    };
+
+    const intervalId = window.setInterval(() => {
+      if (Date.now() < pausedUntil) return;
+      centerCardSmooth(findNearestIndex() + 1);
+    }, AUTOPLAY_INTERVAL_MS);
+
+    container.addEventListener("pointerdown", pause);
+    container.addEventListener("wheel", pause, { passive: true });
+    container.addEventListener("touchstart", pause, { passive: true });
+
+    return () => {
+      window.clearInterval(intervalId);
+      container.removeEventListener("pointerdown", pause);
+      container.removeEventListener("wheel", pause);
+      container.removeEventListener("touchstart", pause);
     };
   }, [canLoop, n]);
 

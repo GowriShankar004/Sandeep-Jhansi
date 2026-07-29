@@ -14,19 +14,24 @@ const config: Config = {
     extend: {
       colors: {
         cream: {
-          DEFAULT: "#FBF2E4",
-          light: "#FDF8F0",
-          dark: "#F3E6D2",
+          DEFAULT: "#FFFDF7",
+          light: "#FFFFFB",
+          dark: "#F5F1E6",
         },
         maroon: {
-          DEFAULT: "#7A2432",
-          light: "#93394A",
-          dark: "#5C1B26",
+          DEFAULT: "#2F5233",
+          light: "#3F6B45",
+          dark: "#1F3A22",
         },
         gold: {
-          DEFAULT: "#B4894F",
-          light: "#C9A063",
-          dark: "#96713D",
+          DEFAULT: "#7CB342",
+          light: "#96C761",
+          dark: "#5D8A2E",
+        },
+        sage: {
+          DEFAULT: "#8A9A5B",
+          light: "#A3B18A",
+          dark: "#6E7C48",
         },
         ink: {
           muted: "#8A8078",
@@ -34,6 +39,7 @@ const config: Config = {
       },
       fontFamily: {
         display: ["var(--font-display)", "serif"],
+        script: ["var(--font-script)", "cursive"],
         body: ["var(--font-body)", "sans-serif"],
       },
       letterSpacing: {
@@ -41,7 +47,7 @@ const config: Config = {
       },
       backgroundImage: {
         "mandala-glow":
-          "radial-gradient(circle at center, rgba(180,137,79,0.10) 0%, rgba(180,137,79,0) 70%)",
+          "radial-gradient(circle at center, rgba(124,179,66,0.10) 0%, rgba(124,179,66,0) 70%)",
       },
       keyframes: {
         float: {

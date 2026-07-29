@@ -7,11 +7,13 @@ export const wedding = {
   intro: "Together with our families, invite you to celebrate our wedding",
   date: "27 August 2026",
   dateISO: "2026-08-27",
-  time: "Join us from 12:00 PM onwards",
-  ceremonyPlace: "At our residency- Bandarulanka",
+  countdownTargetISO: "2026-08-27T23:41:00",
+  time: "Join us from 7:00 PM onwards",
+  ceremonyPlace: "At S V Function Hall, Rajahmundry",
   muhurtham: "Muhurtham · 11:41 PM",
   muhurthamPlace: "At S.V Function Hall, Rajahmundry",
   couplePhoto: "/images/2BB17DAD-FDA0-4EE9-8AE2-0BBCD301DC72.jpeg",
+  song: "/audio/song.mp3",
   blessing: {
     heading: "With hearts full of love and joy,\nwe are delighted to invite you\nto celebrate our wedding with us \u{1F49D}",
     subtext: "Your presence will make our special day even more meaningful and memorable ✨",
@@ -33,7 +35,8 @@ export const wedding = {
   ],
   footer: {
     couple: "Jhansi Lakshmi & Sandeep",
+    message: "We look forward to celebrating\nour special day with you.",
     date: "27 · 08 · 2026",
-    families: "With love, Kudipudi & Gubbala families",
+    families: "With love, Kudupudi & Gubbala families",
   },
 } as const;

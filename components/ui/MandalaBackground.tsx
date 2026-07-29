@@ -15,7 +15,7 @@ export function MandalaBackground({
       aria-hidden="true"
     >
       <div
-        className={`relative h-[140vw] w-[140vw] max-w-none opacity-[0.16] sm:h-[70vw] sm:w-[70vw] ${
+        className={`relative h-[140vw] w-[140vw] max-w-none ${spin ? "opacity-[0.26]" : "opacity-[0.16]"} sm:h-[70vw] sm:w-[70vw] ${
           spin ? "animate-spin-slow" : ""
         }`}
       >

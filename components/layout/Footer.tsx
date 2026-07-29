@@ -1,20 +1,31 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { wedding } from "@/lib/constants";
-import { Divider } from "@/components/ui/Divider";
 
 export function Footer() {
   return (
-    <footer className="w-full px-4 pt-8 pb-6 text-center sm:px-8 sm:pt-20 sm:pb-10">
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+    <footer className="relative w-full overflow-hidden px-4 pt-3 pb-6 text-center sm:px-8 sm:pt-10 sm:pb-10">
+      <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+        <Image
+          src="/images/f-nobg.png"
+          alt=""
+          width={800}
+          height={1422}
+          className="h-[32rem] w-auto opacity-[0.08] sm:h-[40rem]"
+        />
+      </div>
+
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, delay: 0.06 }}
+        className="mt-6 whitespace-pre-line font-body text-sm italic text-ink-muted sm:text-base"
       >
-        <Divider />
-      </motion.div>
+        {wedding.footer.message}
+      </motion.p>
 
       <motion.h3
         initial={{ opacity: 0, y: 12 }}
@@ -47,16 +58,6 @@ export function Footer() {
       >
         {wedding.footer.families}
       </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.5, delay: 0.34 }}
-        className="mt-8"
-      >
-        <Divider />
-      </motion.div>
     </footer>
   );
 }

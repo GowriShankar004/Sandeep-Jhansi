@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { wedding } from "@/lib/constants";
 import { MandalaBackground } from "@/components/ui/MandalaBackground";
+import { ColorSplash } from "@/components/ui/ColorSplash";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -18,16 +19,27 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 pb-20 pt-10 text-center sm:px-8 sm:pb-28 sm:pt-16"
+      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 pb-8 pt-10 text-center sm:px-8 sm:pb-12 sm:pt-16"
     >
       <MandalaBackground spin priority />
+      <ColorSplash tone="sage" className="left-4 top-4 h-32 w-32 sm:h-48 sm:w-48" />
+      <ColorSplash tone="maroon" className="right-4 top-4 h-28 w-28 sm:h-44 sm:w-44" />
+
+      <motion.div
+        initial={{ opacity: 0, y: -14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 -mx-4 -mt-10 aspect-[1870/929] w-[calc(100%+2rem)] sm:-mx-8 sm:-mt-16 sm:w-[calc(100%+4rem)]"
+      >
+        <Image src="/images/gr-nobg.png" alt="" fill sizes="100vw" className="object-contain" priority />
+      </motion.div>
 
       <motion.div
         initial="hidden"
         animate="show"
         variants={fadeUp}
         custom={0}
-        className="relative z-10 h-16 w-12 sm:h-20 sm:w-[3.75rem]"
+        className="relative z-10 -mt-6 h-16 w-12 sm:-mt-10 sm:h-20 sm:w-[3.75rem]"
       >
         <Image src="/images/ganesh.png" alt="Shree Ganesha" width={484} height={659} className="h-full w-full object-contain" priority />
       </motion.div>
@@ -57,18 +69,24 @@ export function Hero() {
         animate="show"
         variants={fadeUp}
         custom={0.45}
-        className="relative z-10 mt-6 flex flex-col items-center font-display text-4xl leading-tight text-maroon xs:text-5xl sm:mt-8 sm:text-6xl md:text-7xl"
+        className="relative z-10 mt-6 w-full max-w-[19rem] xs:max-w-[22rem] sm:mt-8 sm:max-w-md md:max-w-lg"
       >
-        <span>{wedding.groom}</span>
-        <span className="my-1 block text-2xl text-rose-500 sm:text-3xl">&#10084;</span>
-        <span>{wedding.bride}</span>
+        <Image
+          src="/images/couple-names-green.png"
+          alt={`${wedding.groom} & ${wedding.bride}`}
+          width={1015}
+          height={658}
+          sizes="(min-width: 768px) 32rem, (min-width: 640px) 28rem, (min-width: 380px) 22rem, 19rem"
+          className="h-auto w-full"
+          priority
+        />
       </motion.h1>
 
       <motion.div
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 mt-7 h-28 w-28 overflow-hidden rounded-full border-2 border-gold/50 shadow-[0_0_0_6px_rgba(180,137,79,0.08)] sm:mt-10 sm:h-40 sm:w-40"
+        className="relative z-10 mt-6 h-28 w-28 overflow-hidden rounded-full border-2 border-gold/50 shadow-[0_0_0_6px_rgba(124,179,66,0.08)] sm:mt-8 sm:h-40 sm:w-40"
       >
         <Image
           src={wedding.couplePhoto}
@@ -85,7 +103,7 @@ export function Hero() {
         animate="show"
         variants={fadeUp}
         custom={0.7}
-        className="relative z-10 mt-8 font-display text-lg italic text-gold-light sm:text-xl"
+        className="relative z-10 mt-6 font-display text-lg italic text-gold-light sm:text-xl"
       >
         &ldquo;{wedding.tagline}&rdquo;
       </motion.p>
@@ -105,22 +123,11 @@ export function Hero() {
         animate="show"
         variants={fadeUp}
         custom={0.86}
-        className="relative z-10 mt-6 space-y-1.5 font-body text-xs font-semibold tracking-wide text-maroon sm:text-sm"
+        className="relative z-10 mt-5 space-y-1.5 font-body text-sm font-semibold tracking-wide text-maroon sm:text-base"
       >
         <p>ON {wedding.date.toUpperCase()}</p>
         <p>{wedding.time.toUpperCase()}</p>
         <p className="font-normal normal-case text-ink-muted">{wedding.ceremonyPlace}</p>
-      </motion.div>
-
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={fadeUp}
-        custom={0.94}
-        className="relative z-10 mt-3 space-y-1 font-body text-xs font-semibold tracking-wide text-maroon sm:text-sm"
-      >
-        <p>{wedding.muhurtham.toUpperCase()}</p>
-        <p className="font-normal normal-case text-ink-muted">{wedding.muhurthamPlace}</p>
       </motion.div>
     </section>
   );

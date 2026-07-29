@@ -24,6 +24,21 @@ body {
   color: theme("colors.cream.light");
 }
 
+/* Exactly one screen tall. svh is the *smallest* viewport height (mobile toolbars
+   shown), so the hero can never be clipped by an address bar appearing.
+   The fallback is a separate rule on purpose: as two declarations in one block
+   the minifier discards the 100vh line, which would leave old browsers with no
+   height at all. */
+.h-screen-safe {
+  height: 100vh;
+}
+
+@supports (height: 100svh) {
+  .h-screen-safe {
+    height: 100svh;
+  }
+}
+
 .scrollbar-hide {
   scrollbar-width: none;
   -ms-overflow-style: none;

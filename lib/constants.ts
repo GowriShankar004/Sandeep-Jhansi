@@ -33,7 +33,7 @@ export const wedding = {
     { id: 1, alt: "Moment 1", src: "/images/IMG_1250.jpg" },
     { id: 2, alt: "Moment 2", src: "/images/IMG_1252.jpeg" },
     { id: 3, alt: "Moment 3", src: "/images/IMG_1253.jpeg" },
-    { id: 4, alt: "Moment 4", src: "/images/IMG_1256.jpeg" },
+    { id: 4, alt: "Moment 4", src: "/images/IMG_1281.jpeg" },
     { id: 5, alt: "Moment 5", src: "/images/IMG_1257.jpeg" },
     { id: 6, alt: "Moment 6", src: "/images/IMG_1251.jpeg" },
   ],

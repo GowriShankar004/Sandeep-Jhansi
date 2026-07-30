@@ -53,12 +53,19 @@ export function Cover() {
           // wide screens reads as part of the design
           className="fixed inset-0 z-50 block w-full cursor-pointer overflow-hidden border-0 bg-gradient-to-b from-[#DCE1C8] to-[#B9C7A2] p-0"
         >
+          {/* Phones: zoomed to fill edge to edge, no side gaps. The card is much
+              taller-than-wide (0.47) than a phone viewport, so filling by width
+              crops ~7-9% off the top and bottom, trimming the gold frame's
+              horizontal lines -- the accepted cost of no gaps.
+              Wide screens keep the whole card: filling a 1440x820 window would
+              show only 27% of it, a band through the names with the wreath,
+              monogram and frame all cropped away. */}
           <Image
             src="/images/cover.png"
             alt={`${wedding.groom} & ${wedding.bride} — wedding invitation`}
             fill
             sizes="100vw"
-            className="object-contain"
+            className="object-cover object-center sm:object-contain"
             priority
           />
 

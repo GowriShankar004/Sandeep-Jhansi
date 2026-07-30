@@ -87,7 +87,7 @@ export function Countdown() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.6 }}
         transition={{ duration: 0.5, delay: 0.18 }}
-        className="mt-2 font-display text-4xl text-maroon sm:text-5xl"
+        className="mt-2 font-display text-3xl text-maroon sm:text-4xl"
       >
         Counting Down to Forever
       </motion.h2>

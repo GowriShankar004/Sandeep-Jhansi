@@ -27,9 +27,12 @@ const PETAL_SHAPES = [
   "50% 50% 0% 50% / 60% 60% 0% 60%",
 ];
 
-const MAX_PETALS = 32;
-const MIN_SPAWN_MS = 300;
-const MAX_SPAWN_MS = 600;
+// Every petal is a separately composited, continuously animating layer, so the
+// count is the main lever on scroll smoothness. Phones get fewer.
+const MAX_PETALS_MOBILE = 10;
+const MAX_PETALS_DESKTOP = 18;
+const MIN_SPAWN_MS = 700;
+const MAX_SPAWN_MS = 1300;
 
 function randomBetween(min: number, max: number) {
   return min + Math.random() * (max - min);
@@ -58,11 +61,14 @@ export function FlowerPetals() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let timeoutId: number;
+    const maxPetals = window.matchMedia("(min-width: 640px)").matches
+      ? MAX_PETALS_DESKTOP
+      : MAX_PETALS_MOBILE;
 
     const spawn = () => {
       setPetals((prev) => {
         const next = [...prev, createPetal(idRef.current++)];
-        return next.length > MAX_PETALS ? next.slice(next.length - MAX_PETALS) : next;
+        return next.length > maxPetals ? next.slice(next.length - maxPetals) : next;
       });
       timeoutId = window.setTimeout(spawn, randomBetween(MIN_SPAWN_MS, MAX_SPAWN_MS));
     };

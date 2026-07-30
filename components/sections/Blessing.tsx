@@ -11,7 +11,7 @@ export function Blessing() {
     <section className="relative flex w-full flex-col items-center justify-center overflow-hidden px-4 py-12 text-center sm:min-h-[70vh] sm:px-8 sm:py-24">
       <MandalaBackground />
 
-      <div className="relative z-10 mt-8 font-display text-2xl leading-relaxed text-maroon sm:text-3xl md:text-4xl">
+      <div className="relative z-10 mt-8 font-display text-xl leading-relaxed text-maroon sm:text-2xl md:text-3xl">
         {lines.map((line, i) => (
           <motion.p
             key={i}
@@ -30,7 +30,7 @@ export function Blessing() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, delay: 0.6 }}
-        className="relative z-10 mt-8 max-w-md font-body text-sm leading-relaxed text-ink-muted sm:text-base"
+        className="relative z-10 mt-8 max-w-md font-body text-[13px] leading-relaxed text-ink-muted sm:text-sm"
       >
         {wedding.blessing.subtext}
       </motion.p>

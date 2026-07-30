@@ -18,6 +18,10 @@ export const wedding = {
     heading: "With hearts full of love and joy,\nwe are delighted to invite you\nto celebrate our wedding with us \u{1F49D}",
     subtext: "Your presence will make our special day even more meaningful and memorable ✨",
   },
+  dinner: {
+    time: "Dinner starts at 8:00 PM onwards",
+    place: "At S V Function Hall, Rajahmundry",
+  },
   venue: {
     name: "S V Function Hall",
     shortAddress: "Rajahmundry, Andhra Pradesh",
